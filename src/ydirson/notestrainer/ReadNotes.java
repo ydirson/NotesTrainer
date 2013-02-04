@@ -12,7 +12,8 @@ public class ReadNotes extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game);
 
-        LinearLayout main = (LinearLayout) findViewById(R.id.main);
-        main.addView(new ScoreView(this));
+        LinearLayout score = (LinearLayout) findViewById(R.id.score);
+        _scoreview = new ScoreView(this);
+        score.addView(_scoreview);
     }
 }
