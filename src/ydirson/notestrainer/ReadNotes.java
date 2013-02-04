@@ -3,8 +3,11 @@ package ydirson.notestrainer;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.LinearLayout;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import ydirson.notestrainer.ScoreView;
 
@@ -14,6 +17,9 @@ public class ReadNotes extends Activity {
     Random _rng;
     int _currentNote = -1;
     Chronometer _chrono;
+
+    List noteNames =
+        Arrays.asList(new String[] { "A", "B", "C", "D", "E", "F", "G" });
 
     /** Called when the activity is first created. */
     @Override
@@ -50,5 +56,14 @@ public class ReadNotes extends Activity {
             _chrono.stop();
         }
         _scoreview.setNote(_currentNote);
+    }
+
+    public void onChooseNote(View view) {
+        Button b = (Button)view;
+        int note_idx = noteNames.indexOf(b.getText());
+        if (note_idx == _currentNote % 7) {
+            _currentNote = _randomNote();
+            _scoreview.setNote(_currentNote);
+        }
     }
 }
