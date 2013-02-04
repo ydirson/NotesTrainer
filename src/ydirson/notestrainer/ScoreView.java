@@ -53,6 +53,7 @@ public class ScoreView extends View {
      */
     public void setNote(int note) {
         _note = note;
+        invalidate();
     }
 
     @Override

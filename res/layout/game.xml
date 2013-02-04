@@ -7,6 +7,7 @@
               android:background="@android:color/white"
               >
   <Chronometer
+      android:id="@+id/chrono"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
       android:gravity="center_horizontal"
@@ -33,6 +34,7 @@
       android:layout_height="wrap_content"
       android:gravity="center_horizontal"
       android:layout_alignParentBottom="true"
+      android:onClick="onStartStop"
 
       android:text="@string/start_stop"
       android:textSize="20dp"
