@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Picture;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.view.View;
 import com.larvalabs.svgandroid.SVG;
 import com.larvalabs.svgandroid.SVGParser;
@@ -18,12 +19,17 @@ public class ScoreView extends View {
     Picture _clef;
     Rect _clefRect;
 
+    int _note;
+
     int _lineInterval = 10;
     int _linesVPad    = 40;
     int _linesHpad    = 2;
     int _clefLeft     = 10;
     int _clefTop      = 10;
     int _clefHeight   = 100;
+
+    int   _clefToNote = 30;
+    float _noteWidth  = 1.25f * _lineInterval;
 
     public ScoreView(Context context) {
         super(context);
@@ -36,6 +42,17 @@ public class ScoreView extends View {
         int scaledWidth = _clef.getWidth() * _clefHeight / _clef.getHeight();
         _clefRect = new Rect(_clefLeft, _clefTop,
                              _clefLeft + scaledWidth, _clefTop + _clefHeight);
+
+        // no note by default
+        _note = -1;
+    }
+
+    /*
+     * note: A1 = 0, B1 = 1, ... A2 = 7, A3 = 14, etc
+     * treble key range for reference: D3 - G4 = 17 - 27
+     */
+    public void setNote(int note) {
+        _note = note;
     }
 
     @Override
@@ -60,5 +77,26 @@ public class ScoreView extends View {
                         _linesHpad, _linesVPad + 4 * _lineInterval, _paint);
         // clef
         canvas.drawPicture(_clef, _clefRect);
+
+        // note if any
+        if (_note >= 0) {
+            float hpos = _clefLeft + _clefRect.width() + _clefToNote;
+            float vposBottom = _linesVPad - 0.5f * _lineInterval * (_note - 27);
+            canvas.drawOval(new RectF(hpos, vposBottom - _lineInterval,
+                                      hpos + _noteWidth, vposBottom), _paint);
+
+            // lower supplementary lines
+            for (int suplines = (18 - _note) / 2; suplines > 0; suplines--) {
+                int vpos = _linesVPad + (4 + suplines) * _lineInterval;
+                canvas.drawLine(hpos - 0.5f * _noteWidth, vpos,
+                                hpos + 1.5f * _noteWidth, vpos, _paint);
+            }
+            // upper supplementary lines
+            for (int suplines = (_note - 26) / 2; suplines > 0; suplines--) {
+                int vpos = _linesVPad + (0 - suplines) * _lineInterval;
+                canvas.drawLine(hpos - 0.5f * _noteWidth, vpos,
+                                hpos + 1.5f * _noteWidth, vpos, _paint);
+            }
+        }
     }
 }
