@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+  <ListPreference
+      android:key="pref_notation"
+      android:title="@string/pref_notation"
+      android:dialogTitle="@string/pref_notation"
+      android:entries="@array/pref_notation_entries"
+      android:entryValues="@array/pref_notation_values"
+      android:defaultValue="@string/pref_notation_default" />
+</PreferenceScreen>
