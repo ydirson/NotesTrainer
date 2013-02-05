@@ -18,7 +18,7 @@ public class ReadNotes extends Activity {
     int _currentNote = -1;
     Chronometer _chrono;
 
-    List noteNames =
+    List<String> noteNames =
         Arrays.asList(new String[] { "A", "B", "C", "D", "E", "F", "G" });
 
     /** Called when the activity is first created. */
@@ -27,10 +27,21 @@ public class ReadNotes extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game);
 
+        // create the score widget
         LinearLayout score = (LinearLayout) findViewById(R.id.score);
         _scoreview = new ScoreView(this);
         score.addView(_scoreview);
 
+        // note button labels
+        LinearLayout main = (LinearLayout) findViewById(R.id.main);
+        for (String englishNote: noteNames) {
+            final String tag = String.format("note_%s", englishNote);
+            Button b = (Button) main.findViewWithTag(tag);
+            if (b != null)
+                b.setText(englishNote);
+        }
+
+        // remainder
         _chrono = (Chronometer) findViewById(R.id.chrono);
         _rng = new Random();
     }
