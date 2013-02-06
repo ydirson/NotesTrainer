@@ -25,6 +25,8 @@ public class ReadNotes extends Activity {
     List<String> noteNames =
         Arrays.asList(new String[] { "A", "B", "C", "D", "E", "F", "G" });
 
+    final String TAGPREFIX = "note_";
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,7 @@ public class ReadNotes extends Activity {
         // note button labels
         LinearLayout main = (LinearLayout) findViewById(R.id.main);
         for (String englishNote: noteNames) {
-            final String tag = String.format("note_%s", englishNote);
+            final String tag = TAGPREFIX + englishNote;
             Button b = (Button) main.findViewWithTag(tag);
             if (b != null)
                 b.setText(englishNote);
@@ -75,7 +77,11 @@ public class ReadNotes extends Activity {
 
     public void onChooseNote(View view) {
         Button b = (Button)view;
-        int note_idx = noteNames.indexOf(b.getText());
+        String tag = (String) b.getTag();
+        if (! tag.startsWith(TAGPREFIX))
+            // FIXME should log error
+            return;
+        int note_idx = noteNames.indexOf(tag.substring(TAGPREFIX.length()));
         if (note_idx == _currentNote % 7) {
             _currentNote = _randomNote();
             _scoreview.setNote(_currentNote);
