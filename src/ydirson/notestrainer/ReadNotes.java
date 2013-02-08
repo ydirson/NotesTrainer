@@ -2,7 +2,9 @@ package ydirson.notestrainer;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,9 +23,17 @@ public class ReadNotes extends Activity {
     Random _rng;
     int _currentNote = -1;
     Chronometer _chrono;
+    SharedPreferences _sharedPrefs;
+    String[] _displayedNoteNames;
 
-    List<String> noteNames =
-        Arrays.asList(new String[] { "A", "B", "C", "D", "E", "F", "G" });
+    String[] noteNames =
+        new String[] { "A", "B", "C", "D", "E", "F", "G" };
+    List<String> noteNamesList = Arrays.asList(noteNames);
+
+    String[] noteNames_latin =
+        new String[] { "la", "si", "do", "re", "mi", "fa", "sol" };
+    String[] noteNames_german =
+        new String[] { "A", "H", "C", "D", "E", "F", "G" };
 
     final String TAGPREFIX = "note_";
 
@@ -38,18 +48,21 @@ public class ReadNotes extends Activity {
         _scoreview = new ScoreView(this);
         score.addView(_scoreview);
 
-        // note button labels
-        LinearLayout main = (LinearLayout) findViewById(R.id.main);
-        for (String englishNote: noteNames) {
-            final String tag = TAGPREFIX + englishNote;
-            Button b = (Button) main.findViewWithTag(tag);
-            if (b != null)
-                b.setText(englishNote);
-        }
+        // preferences
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        _sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         // remainder
         _chrono = (Chronometer) findViewById(R.id.chrono);
         _rng = new Random();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Separate from onCreate to force update when we get back
+        // from the preference Activity
+        setupNoteButtons();
     }
 
     int _randomNote() {
@@ -81,10 +94,28 @@ public class ReadNotes extends Activity {
         if (! tag.startsWith(TAGPREFIX))
             // FIXME should log error
             return;
-        int note_idx = noteNames.indexOf(tag.substring(TAGPREFIX.length()));
+        int note_idx = noteNamesList.indexOf(tag.substring(TAGPREFIX.length()));
         if (note_idx == _currentNote % 7) {
             _currentNote = _randomNote();
             _scoreview.setNote(_currentNote);
+        }
+    }
+
+    public void setupNoteButtons() {
+        // notation to use
+        String notation = _sharedPrefs.getString("pref_notation", "english");
+        if (notation.equals("english")) _displayedNoteNames = noteNames;
+        else if (notation.equals("latin")) _displayedNoteNames = noteNames_latin;
+        else if (notation.equals("german")) _displayedNoteNames = noteNames_german;
+        // else FIXME
+
+        // note button labels
+        LinearLayout main = (LinearLayout) findViewById(R.id.main);
+        for (int noteIdx = 0; noteIdx < noteNames.length; noteIdx++) {
+            final String tag = TAGPREFIX + noteNames[noteIdx];
+            Button b = (Button) main.findViewWithTag(tag);
+            if (b != null)
+                b.setText(_displayedNoteNames[noteIdx]);
         }
     }
 

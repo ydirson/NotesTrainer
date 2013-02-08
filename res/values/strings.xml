@@ -6,16 +6,19 @@
   <string name="menu_prefs">Preferences</string>
 
   <string name="pref_notation">Music notation</string>
-  <string name="pref_notation_english">English</string>
-  <string name="pref_notation_se_european">S and E European</string>
-  <string name="pref_notation_default">0</string>
+  <string name="pref_notation_english">English (A B C)</string>
+  <string name="pref_notation_latin">Latin (do re mi)</string>
+  <string name="pref_notation_german">German (A H C)</string>
+  <string name="pref_notation_default">english</string>
 
   <string-array name="pref_notation_entries">
     <item>@string/pref_notation_english</item>
-    <item>@string/pref_notation_se_european</item>
+    <item>@string/pref_notation_latin</item>
+    <item>@string/pref_notation_german</item>
   </string-array>
   <string-array name="pref_notation_values">
-    <item>0</item>
-    <item>1</item>
+    <item>english</item>
+    <item>latin</item>
+    <item>german</item>
   </string-array>
 </resources>
