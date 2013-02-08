@@ -26,7 +26,7 @@
       android:background="@android:color/white"
       />
 
-  <include layout="@layout/notes_buttons" />
+  <include layout="@layout/notes_buttons_cscale" />
 
   <Button
       android:id="@+id/start_stop"
