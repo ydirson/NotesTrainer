@@ -14,6 +14,8 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
+import ydirson.notestrainer.R;
+
 public class SeekBarPreference extends Preference implements OnSeekBarChangeListener {
 	
 	private final String TAG = getClass().getName();
