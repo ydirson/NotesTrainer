@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:robobunny="http://robobunny.com" >
   <ListPreference
       android:key="pref_notation"
       android:title="@string/pref_notation"
@@ -7,4 +9,25 @@
       android:entries="@array/pref_notation_entries"
       android:entryValues="@array/pref_notation_values"
       android:defaultValue="@string/pref_notation_default" />
+
+  <com.robobunny.SeekBarPreference
+      android:key="pref_minnote"
+      android:title="@string/pref_minnote"
+      android:summary="@string/pref_minnote_summary"
+      android:defaultValue="14"
+      android:max="34"
+      robobunny:min="10"
+      robobunny:unitsLeft=""
+      robobunny:unitsRight=""
+      />
+  <com.robobunny.SeekBarPreference
+      android:key="pref_maxnote"
+      android:title="@string/pref_maxnote"
+      android:summary="@string/pref_maxnote_summary"
+      android:defaultValue="30"
+      android:max="34"
+      robobunny:min="10"
+      robobunny:unitsLeft=""
+      robobunny:unitsRight=""
+      />
 </PreferenceScreen>

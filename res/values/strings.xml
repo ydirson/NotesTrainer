@@ -5,6 +5,8 @@
   <string name="start_stop">Start / Stop</string>
   <string name="menu_prefs">Preferences</string>
 
+  <!-- -->
+
   <string name="pref_notation">Music notation</string>
   <string name="pref_notation_english">English (A B C)</string>
   <string name="pref_notation_latin">Latin (do re mi)</string>
@@ -21,4 +23,12 @@
     <item>latin</item>
     <item>german</item>
   </string-array>
+
+  <!-- -->
+
+  <string name="pref_minnote">Lowest note</string>
+  <string name="pref_minnote_summary">lower bound for generated notes</string>
+  <string name="pref_maxnote">Highest note</string>
+  <string name="pref_maxnote_summary">upper bound for generated notes</string>
+
 </resources>

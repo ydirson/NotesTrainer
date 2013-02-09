@@ -24,8 +24,12 @@ public class ReadNotes extends Activity {
     int _currentNote = -1;
     Chronometer _chrono;
     SharedPreferences _sharedPrefs;
-    String[] _displayedNoteNames;
 
+    // tunable params
+    String[] _displayedNoteNames;
+    int _noteMin, _noteMax;
+
+    // constants
     String[] noteNames =
         new String[] { "A", "B", "C", "D", "E", "F", "G" };
     List<String> noteNamesList = Arrays.asList(noteNames);
@@ -63,13 +67,15 @@ public class ReadNotes extends Activity {
         // Separate from onCreate to force update when we get back
         // from the preference Activity
         setupNoteButtons();
+
+        _noteMin = _sharedPrefs.getInt("pref_minnote", 14); // A3
+        _noteMax = _sharedPrefs.getInt("pref_maxnote", 30); // C5
     }
 
     int _randomNote() {
         int note;
         do {
-            // 10 = D2 - 34 = G5
-            note = 10 + _rng.nextInt(24);
+            note = _noteMin + _rng.nextInt(_noteMax - _noteMin + 1);
         } while (note == _currentNote);
         return note;
     }
