@@ -4,18 +4,25 @@
       android:versionCode="1"
       android:versionName="1.0">
     <application android:label="@string/appname" >
-        <activity android:name="ReadNotes"
+        <activity android:name="MainMenu"
                   android:label="@string/appname">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="ReadNotes"
+                  android:label="@string/appname_readnotes">
+            <intent-filter>
+                <action android:name="android.support.PARENT_ACTIVITY" />
+                <category android:name="ydirson.notestrainer.MainMenu" />
+            </intent-filter>
+        </activity>
         <activity android:name="Prefs"
                   android:label="@string/appname_prefs">
             <intent-filter>
                 <action android:name="android.support.PARENT_ACTIVITY" />
-                <category android:name="ydirson.notestrainer.ReadNotes" />
+                <category android:name="ydirson.notestrainer.MainMenu" />
             </intent-filter>
         </activity>
     </application>

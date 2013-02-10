@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="appname">NotesTrainer - ReadNotes</string>
+  <string name="appname">NotesTrainer</string>
+  <string name="appname_readnotes">NotesTrainer - ReadNotes</string>
   <string name="appname_prefs">NotesTrainer - Preferences</string>
   <string name="start_stop">Start / Stop</string>
+
+  <!-- -->
+
+  <string name="menu_training">Train to read</string>
   <string name="menu_prefs">Preferences</string>
 
   <!-- -->
