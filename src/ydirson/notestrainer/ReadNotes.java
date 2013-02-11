@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -84,7 +85,7 @@ public class ReadNotes extends Activity {
         if (!_started) {
             _currentNote = _randomNote();
             _started = true;
-            _chrono.setText("0");
+            _chrono.setBase(SystemClock.elapsedRealtime());
             _chrono.start();
         } else {
             _currentNote = -1;
