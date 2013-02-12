@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -47,6 +48,9 @@ public class ReadNotes extends Activity {
     GameMode _gameMode;
     // intent extra id for mode
     public final static String EXTRA_MODE = "ydirson.notestrainer.GameMode";
+
+    // scoring
+    int _nPresented, _nCorrect, _nIncorrect;
 
     /** Called when the activity is first created. */
     @Override
@@ -87,11 +91,13 @@ public class ReadNotes extends Activity {
         do {
             note = _noteMin + _rng.nextInt(_noteMax - _noteMin + 1);
         } while (note == _currentNote);
+        _nPresented ++;
         return note;
     }
 
     public void onStartStop(View view) {
         if (!_started) {
+            _nPresented = 0; _nCorrect = 0; _nIncorrect = 0;
             _currentNote = _randomNote();
             _started = true;
             _chrono.setBase(SystemClock.elapsedRealtime());
@@ -100,6 +106,10 @@ public class ReadNotes extends Activity {
             _currentNote = -1;
             _started = false;
             _chrono.stop();
+            long nSeconds = (SystemClock.elapsedRealtime() - _chrono.getBase()) / 1000;
+            Toast.makeText(this, String.format("%d in %d seconds\n%d errors",
+                                               _nCorrect, nSeconds,
+                                               _nIncorrect), Toast.LENGTH_SHORT).show();
         }
         _scoreview.setNote(_currentNote);
     }
@@ -133,7 +143,9 @@ public class ReadNotes extends Activity {
         if (note_idx == _currentNote % 7) {
             _currentNote = _randomNote();
             _scoreview.setNote(_currentNote);
-        }
+            _nCorrect ++;
+        } else
+            _nIncorrect ++;
     }
 
     public void setupNoteButtons() {
