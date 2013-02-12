@@ -8,6 +8,7 @@
   <!-- -->
 
   <string name="menu_training">Train to read</string>
+  <string name="menu_oneminute">1-minute reading test</string>
   <string name="menu_prefs">Preferences</string>
 
   <!-- -->

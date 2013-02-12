@@ -42,6 +42,12 @@ public class ReadNotes extends Activity {
 
     final String TAGPREFIX = "note_";
 
+    // game type
+    public enum GameMode { TRAINING, ONEMINUTE };
+    GameMode _gameMode;
+    // intent extra id for mode
+    public final static String EXTRA_MODE = "ydirson.notestrainer.GameMode";
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,12 +59,15 @@ public class ReadNotes extends Activity {
         _scoreview = new ScoreView(this);
         score.addView(_scoreview);
 
+        _gameMode = (GameMode)getIntent().getSerializableExtra(EXTRA_MODE);
+
         // preferences
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         _sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         // remainder
         _chrono = (Chronometer) findViewById(R.id.chrono);
+        _chrono.setOnChronometerTickListener(chronometerTickListener);
         _rng = new Random();
     }
 
@@ -94,6 +103,25 @@ public class ReadNotes extends Activity {
         }
         _scoreview.setNote(_currentNote);
     }
+
+    Chronometer.OnChronometerTickListener chronometerTickListener =
+        new Chronometer.OnChronometerTickListener() {
+            @Override
+                public void onChronometerTick(Chronometer chronometer) {
+                switch (_gameMode) {
+                case TRAINING:
+                    break;
+                case ONEMINUTE:
+                    if (SystemClock.elapsedRealtime() - chronometer.getBase() >= 60 * 1000) {
+                        // end the game
+                        onStartStop(null);
+                    }
+                    break;
+                default: throw new IllegalArgumentException(String.format("unsupported game mode %s",
+                                                                          _gameMode));
+                }
+            }
+        };
 
     public void onChooseNote(View view) {
         Button b = (Button)view;

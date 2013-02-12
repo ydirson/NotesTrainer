@@ -14,6 +14,13 @@ public class MainMenu extends Activity {
 
     public void runTraining(View view) {
         Intent intent = new Intent(this, ReadNotes.class);
+        intent.putExtra(ReadNotes.EXTRA_MODE, ReadNotes.GameMode.TRAINING);
+        startActivity(intent);
+    }
+
+    public void runOneMinute(View view) {
+        Intent intent = new Intent(this, ReadNotes.class);
+        intent.putExtra(ReadNotes.EXTRA_MODE, ReadNotes.GameMode.ONEMINUTE);
         startActivity(intent);
     }
 
