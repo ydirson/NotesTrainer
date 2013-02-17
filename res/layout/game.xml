@@ -28,17 +28,23 @@
 
   <include layout="@layout/notes_buttons_cscale" />
 
-  <Button
-      android:id="@+id/start_stop"
+  <LinearLayout
+      android:orientation="vertical"
       android:layout_width="fill_parent"
-      android:layout_height="wrap_content"
-      android:gravity="center_horizontal"
+      android:layout_height="fill_parent"
       android:layout_alignParentBottom="true"
-      android:onClick="onStartStop"
-
-      android:text="@string/start_stop"
-      android:textSize="20dp"
-      android:textStyle="bold"
-      android:layout_margin="3dp"
-      />
+      android:gravity="bottom"
+      >
+    <Button
+        android:id="@+id/start_stop"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:onClick="onStartStop"
+        android:text="@string/start_stop"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_margin="3dp"
+        />
+  </LinearLayout>
 </LinearLayout>
