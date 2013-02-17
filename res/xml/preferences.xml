@@ -10,6 +10,14 @@
       android:entryValues="@array/pref_notation_values"
       android:defaultValue="@string/pref_notation_default" />
 
+  <ListPreference
+      android:key="pref_clef"
+      android:title="@string/pref_clef"
+      android:dialogTitle="@string/pref_clef"
+      android:entries="@array/pref_clef_entries"
+      android:entryValues="@array/pref_clef_values"
+      android:defaultValue="@string/pref_clef_default" />
+
   <ydirson.notestrainer.NoteSeekBarPreference
       android:key="pref_minnote"
       android:title="@string/pref_minnote"

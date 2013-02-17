@@ -32,6 +32,28 @@
 
   <!-- -->
 
+  <string name="pref_clef">Clef</string>
+  <string name="pref_clef_g2">Treble (G on 2nd line)</string>
+  <string name="pref_clef_f4">Bass (F on 4th line)</string>
+  <string name="pref_clef_c3">Alto (C on 3rd line)</string>
+  <string name="pref_clef_c4">Tenor (C on 4th line)</string>
+  <string name="pref_clef_default">g2</string>
+
+  <string-array name="pref_clef_entries">
+    <item>@string/pref_clef_g2</item>
+    <item>@string/pref_clef_f4</item>
+    <item>@string/pref_clef_c3</item>
+    <item>@string/pref_clef_c4</item>
+  </string-array>
+  <string-array name="pref_clef_values">
+    <item>g2</item>
+    <item>f4</item>
+    <item>c3</item>
+    <item>c4</item>
+  </string-array>
+
+  <!-- -->
+
   <string name="pref_minnote">Lowest note</string>
   <string name="pref_minnote_summary">lower bound for generated notes</string>
   <string name="pref_maxnote">Highest note</string>

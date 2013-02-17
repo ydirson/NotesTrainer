@@ -76,6 +76,13 @@ public class ReadNotes extends Activity {
         Globals.init(this);
         setupNoteButtons();
 
+        String clef = _sharedPrefs.getString("pref_clef", "g2");
+        if (clef.equals("g2")) _scoreview.setClef(ScoreView.ClefG2);
+        else if (clef.equals("f4")) _scoreview.setClef(ScoreView.ClefF4);
+        else if (clef.equals("c3")) _scoreview.setClef(ScoreView.ClefC3);
+        else if (clef.equals("c4")) _scoreview.setClef(ScoreView.ClefC4);
+        // else FIXME
+
         _noteMin = _sharedPrefs.getInt("pref_minnote", 14); // A3
         _noteMax = _sharedPrefs.getInt("pref_maxnote", 30); // C5
     }
