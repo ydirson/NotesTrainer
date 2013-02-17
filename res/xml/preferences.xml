@@ -10,7 +10,7 @@
       android:entryValues="@array/pref_notation_values"
       android:defaultValue="@string/pref_notation_default" />
 
-  <com.robobunny.SeekBarPreference
+  <ydirson.notestrainer.NoteSeekBarPreference
       android:key="pref_minnote"
       android:title="@string/pref_minnote"
       android:summary="@string/pref_minnote_summary"
@@ -20,7 +20,7 @@
       robobunny:unitsLeft=""
       robobunny:unitsRight=""
       />
-  <com.robobunny.SeekBarPreference
+  <ydirson.notestrainer.NoteSeekBarPreference
       android:key="pref_maxnote"
       android:title="@string/pref_maxnote"
       android:summary="@string/pref_maxnote_summary"
