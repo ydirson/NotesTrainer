@@ -7,29 +7,48 @@ import android.graphics.Paint;
 import android.graphics.Picture;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.util.Log;
 import android.view.View;
 import com.larvalabs.svgandroid.SVG;
 import com.larvalabs.svgandroid.SVGParser;
 import java.lang.Math;
 
+class Clef {
+    int _svgResource;
+    int _height, _top;
+    public Clef(int svgResource, int height, int top) {
+        _svgResource = svgResource;
+        _height = height;
+        _top = top;
+    }
+}
+
 public class ScoreView extends View {
     int _height;
     int _width;
     Paint _paint;
-    Picture _clef;
+    Picture _clefPic;
     Rect _clefRect;
+    Clef _clef;
 
     int _note;
 
-    int _lineInterval = 10;
-    int _linesVPad    = 40;
-    int _linesHpad    = 2;
-    int _clefLeft     = 10;
-    int _clefTop      = 10;
-    int _clefHeight   = 100;
+    static final int _lineInterval = 10;
+    static final int _linesVPad    = 40;
+    static final int _linesHpad    = 2;
+    static final int _clefLeft     = 10;
 
-    int   _clefToNote = 30;
-    float _noteWidth  = 1.25f * _lineInterval;
+    static final int   _clefToNote = 30;
+    static final float _noteWidth  = 1.25f * _lineInterval;
+
+    public static final Clef ClefG2 = new Clef(R.raw.gclef, 7 * _lineInterval,
+                                               _linesVPad - _lineInterval * 13 / 10);
+    public static final Clef ClefF4 = new Clef(R.raw.fclef, _lineInterval * 7 / 2,
+                                               _linesVPad);
+    public static final Clef ClefC3 = new Clef(R.raw.cclef, 4 * _lineInterval,
+                                               _linesVPad);
+    public static final Clef ClefC4 = new Clef(R.raw.cclef, 4 * _lineInterval,
+                                               _linesVPad - _lineInterval);
 
     public ScoreView(Context context) {
         super(context);
@@ -37,14 +56,20 @@ public class ScoreView extends View {
         _paint.setColor(Color.BLACK);
         _paint.setStyle(Paint.Style.FILL);
 
-        SVG svg = SVGParser.getSVGFromResource(getResources(), R.raw.gclef);
-        _clef = svg.getPicture();
-        int scaledWidth = _clef.getWidth() * _clefHeight / _clef.getHeight();
-        _clefRect = new Rect(_clefLeft, _clefTop,
-                             _clefLeft + scaledWidth, _clefTop + _clefHeight);
+        // default clef
+        setClef(ClefG2);
 
         // no note by default
         _note = -1;
+    }
+
+    public void setClef(Clef clef) {
+        _clef = clef;
+        SVG svg = SVGParser.getSVGFromResource(getResources(), clef._svgResource);
+        _clefPic = svg.getPicture();
+        int scaledWidth = _clefPic.getWidth() * _clef._height / _clefPic.getHeight();
+        _clefRect = new Rect(_clefLeft, _clef._top,
+                             _clefLeft + scaledWidth, _clef._top + _clef._height);
     }
 
     /*
@@ -76,8 +101,15 @@ public class ScoreView extends View {
         // vertical start bar
         canvas.drawLine(_linesHpad, _linesVPad,
                         _linesHpad, _linesVPad + 4 * _lineInterval, _paint);
+
+        // if the clef was not set yet, stop here
+        if (_clefPic == null) {
+            Log.d("ScoreView", "null clef");
+            return;
+        }
+
         // clef
-        canvas.drawPicture(_clef, _clefRect);
+        canvas.drawPicture(_clefPic, _clefRect);
 
         // note if any
         if (_note >= 0) {
