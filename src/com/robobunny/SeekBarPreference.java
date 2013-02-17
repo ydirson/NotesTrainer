@@ -135,7 +135,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 			RelativeLayout layout = (RelativeLayout)view;
 
 			mStatusText = (TextView)layout.findViewById(R.id.seekBarPrefValue);
-			mStatusText.setText(String.valueOf(mCurrentValue));
+			updateStatusText(mStatusText, mCurrentValue);
 			mStatusText.setMinimumWidth(30);
 			
 			mSeekBar.setProgress(mCurrentValue - mMinValue);
@@ -152,7 +152,14 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 		}
 		
 	}
-	
+
+	/**
+	 * Update the status text.  Overridable for customisation.
+	 */
+	protected void updateStatusText(TextView statusText, int value) {
+		statusText.setText(String.valueOf(value));
+	}
+
 	@Override
 	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 		int newValue = progress + mMinValue;
@@ -172,7 +179,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 
 		// change accepted, store it
 		mCurrentValue = newValue;
-		mStatusText.setText(String.valueOf(newValue));
+		updateStatusText(mStatusText, newValue);
 		persistInt(newValue);
 
 	}
