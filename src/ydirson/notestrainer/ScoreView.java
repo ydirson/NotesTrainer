@@ -14,9 +14,11 @@ import com.larvalabs.svgandroid.SVGParser;
 import java.lang.Math;
 
 class Clef {
+    int _topNote;               // 5th-line note
     int _svgResource;
     int _height, _top;
-    public Clef(int svgResource, int height, int top) {
+    public Clef(int topNote, int svgResource, int height, int top) {
+        _topNote = topNote;
         _svgResource = svgResource;
         _height = height;
         _top = top;
@@ -41,13 +43,13 @@ public class ScoreView extends View {
     static final int   _clefToNote = 30;
     static final float _noteWidth  = 1.25f * _lineInterval;
 
-    public static final Clef ClefG2 = new Clef(R.raw.gclef, 7 * _lineInterval,
+    public static final Clef ClefG2 = new Clef(26, R.raw.gclef, 7 * _lineInterval,
                                                _linesVPad - _lineInterval * 13 / 10);
-    public static final Clef ClefF4 = new Clef(R.raw.fclef, _lineInterval * 7 / 2,
+    public static final Clef ClefF4 = new Clef(14, R.raw.fclef, _lineInterval * 7 / 2,
                                                _linesVPad);
-    public static final Clef ClefC3 = new Clef(R.raw.cclef, 4 * _lineInterval,
+    public static final Clef ClefC3 = new Clef(20, R.raw.cclef, 4 * _lineInterval,
                                                _linesVPad);
-    public static final Clef ClefC4 = new Clef(R.raw.cclef, 4 * _lineInterval,
+    public static final Clef ClefC4 = new Clef(18, R.raw.cclef, 4 * _lineInterval,
                                                _linesVPad - _lineInterval);
 
     public ScoreView(Context context) {
@@ -114,18 +116,18 @@ public class ScoreView extends View {
         // note if any
         if (_note >= 0) {
             float hpos = _clefLeft + _clefRect.width() + _clefToNote;
-            float vposBottom = _linesVPad - 0.5f * _lineInterval * (_note - 27);
+            float vposBottom = _linesVPad - 0.5f * _lineInterval * (_note - _clef._topNote - 1);
             canvas.drawOval(new RectF(hpos, vposBottom - _lineInterval,
                                       hpos + _noteWidth, vposBottom), _paint);
 
             // lower supplementary lines
-            for (int suplines = (18 - _note) / 2; suplines > 0; suplines--) {
+            for (int suplines = (_clef._topNote - 8 - _note) / 2; suplines > 0; suplines--) {
                 int vpos = _linesVPad + (4 + suplines) * _lineInterval;
                 canvas.drawLine(hpos - 0.5f * _noteWidth, vpos,
                                 hpos + 1.5f * _noteWidth, vpos, _paint);
             }
             // upper supplementary lines
-            for (int suplines = (_note - 26) / 2; suplines > 0; suplines--) {
+            for (int suplines = (_note - _clef._topNote) / 2; suplines > 0; suplines--) {
                 int vpos = _linesVPad + (0 - suplines) * _lineInterval;
                 canvas.drawLine(hpos - 0.5f * _noteWidth, vpos,
                                 hpos + 1.5f * _noteWidth, vpos, _paint);
