@@ -17,6 +17,7 @@ import android.widget.Toast;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import ydirson.notestrainer.Globals;
 import ydirson.notestrainer.ScoreView;
 
 public class ReadNotes extends Activity {
@@ -28,18 +29,10 @@ public class ReadNotes extends Activity {
     SharedPreferences _sharedPrefs;
 
     // tunable params
-    String[] _displayedNoteNames;
     int _noteMin, _noteMax;
 
     // constants
-    String[] noteNames =
-        new String[] { "A", "B", "C", "D", "E", "F", "G" };
-    List<String> noteNamesList = Arrays.asList(noteNames);
-
-    String[] noteNames_latin =
-        new String[] { "la", "si", "do", "re", "mi", "fa", "sol" };
-    String[] noteNames_german =
-        new String[] { "A", "H", "C", "D", "E", "F", "G" };
+    List<String> noteNamesList = Arrays.asList(Globals.noteNames);
 
     final String TAGPREFIX = "note_";
 
@@ -80,6 +73,7 @@ public class ReadNotes extends Activity {
         super.onStart();
         // Separate from onCreate to force update when we get back
         // from the preference Activity
+        Globals.init(this);
         setupNoteButtons();
 
         _noteMin = _sharedPrefs.getInt("pref_minnote", 14); // A3
@@ -149,20 +143,13 @@ public class ReadNotes extends Activity {
     }
 
     public void setupNoteButtons() {
-        // notation to use
-        String notation = _sharedPrefs.getString("pref_notation", "english");
-        if (notation.equals("english")) _displayedNoteNames = noteNames;
-        else if (notation.equals("latin")) _displayedNoteNames = noteNames_latin;
-        else if (notation.equals("german")) _displayedNoteNames = noteNames_german;
-        // else FIXME
-
         // note button labels
         LinearLayout main = (LinearLayout) findViewById(R.id.main);
-        for (int noteIdx = 0; noteIdx < noteNames.length; noteIdx++) {
-            final String tag = TAGPREFIX + noteNames[noteIdx];
+        for (int noteIdx = 0; noteIdx < Globals.noteNames.length; noteIdx++) {
+            final String tag = TAGPREFIX + Globals.noteNames[noteIdx];
             Button b = (Button) main.findViewWithTag(tag);
             if (b != null)
-                b.setText(_displayedNoteNames[noteIdx]);
+                b.setText(Globals.displayedNoteNames[noteIdx]);
         }
     }
 
