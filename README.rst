@@ -8,11 +8,16 @@ press the button with the note name.
 Features:
 
 * selection of music notation (english (A B C), latin (do re mi), german (A H C)
+
 * selection of the range in which the notes are picked at random
+
 * selection of the clef to use (treble, bass, alto, tenor)
+
 * several operation modes:
+
   * training, no time limit
   * one minute test
+
 * free/open-source software, which you can modify to suit your needs
 
 
@@ -21,13 +26,13 @@ How to build
 
 You must have the source for svgandroid in a ../svgandroid.
 
-Get svgandroid with:
+Get svgandroid with::
  svn clone http://svg-android.googlecode.com/svn/trunk/svgandroid ../svgandroid
 
-Prepare svgandroid with:
+Prepare svgandroid with::
  android update lib-project -p .
 
-Build Notes Trainer with:
+Build Notes Trainer with::
  ant clean debug
 
 
@@ -49,4 +54,4 @@ Most ideas came from using the LearnMusicNotes app.  It had however
 too many structural issues, that made me opt for writing a new app
 from scratch.
 
- * http://sourceforge.net/projects/learnmusicnotes/
+* http://sourceforge.net/projects/learnmusicnotes/
