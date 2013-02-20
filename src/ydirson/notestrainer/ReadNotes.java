@@ -106,6 +106,9 @@ public class ReadNotes extends Activity {
 
         _noteMin = _sharedPrefs.getInt("pref_minnote", 14); // A3
         _noteMax = _sharedPrefs.getInt("pref_maxnote", 30); // C5
+        // force range validity
+        if (_noteMax < _noteMin)
+            _noteMax = _noteMin + 1;
     }
 
     @Override
