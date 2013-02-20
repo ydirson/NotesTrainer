@@ -21,7 +21,7 @@ import ydirson.notestrainer.Globals;
 import ydirson.notestrainer.ScoreView;
 
 public class ReadNotes extends Activity {
-    boolean _started = false;
+    boolean _started;
     ScoreView _scoreview;
     Random _rng;
     int _currentNote = -1;
@@ -47,6 +47,12 @@ public class ReadNotes extends Activity {
     // scoring
     int _nPresented, _nCorrect, _nIncorrect;
 
+    // keys for saved state
+    static final String STATE_STARTED = "started";
+    static final String STATE_CURRENTNOTE = "currentNote";
+    static final String STATE_ELAPSEDTIME = "elapsedTime";
+    static final String STATE_GAMEMODE = "gameMode";
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,8 +64,6 @@ public class ReadNotes extends Activity {
         _scoreview = new ScoreView(this);
         score.addView(_scoreview);
 
-        _gameMode = (GameMode)getIntent().getSerializableExtra(EXTRA_MODE);
-
         // preferences
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         _sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -68,6 +72,21 @@ public class ReadNotes extends Activity {
         _chrono = (Chronometer) findViewById(R.id.chrono);
         _chrono.setOnChronometerTickListener(chronometerTickListener);
         _rng = new Random();
+
+        // initialize game state
+        if (savedInstanceState != null) {
+            _started = savedInstanceState.getBoolean(STATE_STARTED);
+            _elapsedTime = savedInstanceState.getLong(STATE_ELAPSEDTIME);
+            _gameMode = (GameMode)savedInstanceState.getSerializable(STATE_GAMEMODE);
+            if (_started) {
+                _currentNote = savedInstanceState.getInt(STATE_CURRENTNOTE);
+                _scoreview.setNote(_currentNote);
+            }
+        } else {
+            _started = false;
+            _elapsedTime = -1;
+            _gameMode = (GameMode)getIntent().getSerializableExtra(EXTRA_MODE);
+        }
     }
 
     @Override
@@ -106,6 +125,19 @@ public class ReadNotes extends Activity {
             _chrono.start();
             _elapsedTime = -1;
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save the user's current game state
+        savedInstanceState.putBoolean(STATE_STARTED, _started);
+        savedInstanceState.putInt(STATE_CURRENTNOTE, _currentNote);
+        savedInstanceState.putLong(STATE_ELAPSEDTIME,
+                                   SystemClock.elapsedRealtime() - _chrono.getBase());
+        savedInstanceState.putSerializable(STATE_GAMEMODE, _gameMode);
+
+        // Save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     int _randomNote() {
