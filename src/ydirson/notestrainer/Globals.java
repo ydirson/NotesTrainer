@@ -20,9 +20,12 @@ public class Globals {
         // notation to use
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         String notation = sharedPrefs.getString("pref_notation", "english");
-        if (notation.equals("english")) Globals.displayedNoteNames = noteNames;
-        else if (notation.equals("latin")) Globals.displayedNoteNames = noteNames_latin;
-        else if (notation.equals("german")) Globals.displayedNoteNames = noteNames_german;
+        if (notation.equals("english"))
+            displayedNoteNames = noteNames;
+        else if (notation.equals("latin"))
+            displayedNoteNames = noteNames_latin;
+        else if (notation.equals("german"))
+            displayedNoteNames = noteNames_german;
         // else FIXME
     }
 }
