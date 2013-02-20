@@ -25,8 +25,10 @@ public class ReadNotes extends Activity {
     ScoreView _scoreview;
     Random _rng;
     int _currentNote = -1;
-    Chronometer _chrono;
     SharedPreferences _sharedPrefs;
+
+    Chronometer _chrono;
+    long _elapsedTime; // keep track of elapsed time when paused, -1 when not paused
 
     // tunable params
     int _noteMin, _noteMax;
@@ -85,6 +87,25 @@ public class ReadNotes extends Activity {
 
         _noteMin = _sharedPrefs.getInt("pref_minnote", 14); // A3
         _noteMax = _sharedPrefs.getInt("pref_maxnote", 30); // C5
+    }
+
+    @Override
+    public void onPause() {
+        if (_started) {
+            _chrono.stop();
+            _elapsedTime = SystemClock.elapsedRealtime() - _chrono.getBase();
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (_started) {
+            _chrono.setBase(SystemClock.elapsedRealtime() - _elapsedTime);
+            _chrono.start();
+            _elapsedTime = -1;
+        }
     }
 
     int _randomNote() {
