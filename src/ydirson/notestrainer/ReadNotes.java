@@ -51,6 +51,9 @@ public class ReadNotes extends Activity {
     static final String STATE_STARTED = "started";
     static final String STATE_CURRENTNOTE = "currentNote";
     static final String STATE_ELAPSEDTIME = "elapsedTime";
+    static final String STATE_NPRESENTED = "nPresented";
+    static final String STATE_NCORRECT = "nCorrect";
+    static final String STATE_NINCORRECT = "nIncorrect";
 
     /** Called when the activity is first created. */
     @Override
@@ -79,6 +82,9 @@ public class ReadNotes extends Activity {
             _elapsedTime = savedInstanceState.getLong(STATE_ELAPSEDTIME);
             if (_started) {
                 _currentNote = savedInstanceState.getInt(STATE_CURRENTNOTE);
+                _nPresented = savedInstanceState.getInt(STATE_NPRESENTED);
+                _nCorrect = savedInstanceState.getInt(STATE_NCORRECT);
+                _nIncorrect = savedInstanceState.getInt(STATE_NINCORRECT);
                 _scoreview.setNote(_currentNote);
             }
         } else {
@@ -133,6 +139,9 @@ public class ReadNotes extends Activity {
         // Save the user's current game state
         savedInstanceState.putBoolean(STATE_STARTED, _started);
         savedInstanceState.putInt(STATE_CURRENTNOTE, _currentNote);
+        savedInstanceState.putInt(STATE_NPRESENTED, _nPresented);
+        savedInstanceState.putInt(STATE_NCORRECT, _nCorrect);
+        savedInstanceState.putInt(STATE_NINCORRECT, _nIncorrect);
         savedInstanceState.putLong(STATE_ELAPSEDTIME,
                                    SystemClock.elapsedRealtime() - _chrono.getBase());
 
