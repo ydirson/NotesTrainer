@@ -8,7 +8,7 @@
   <Button
       android:tag="note_C"
       android:layout_weight="1"
-      android:layout_width="wrap_content"
+      android:layout_width="0dp"
       android:layout_height="match_parent"
       android:gravity="center"
       android:onClick="onChooseNote"
@@ -16,7 +16,7 @@
   <Button
       android:tag="note_D"
       android:layout_weight="1"
-      android:layout_width="wrap_content"
+      android:layout_width="0dp"
       android:layout_height="match_parent"
       android:gravity="center"
       android:onClick="onChooseNote"
@@ -24,7 +24,7 @@
   <Button
       android:tag="note_E"
       android:layout_weight="1"
-      android:layout_width="wrap_content"
+      android:layout_width="0dp"
       android:layout_height="match_parent"
       android:gravity="center"
       android:onClick="onChooseNote"
@@ -32,7 +32,7 @@
   <Button
       android:tag="note_F"
       android:layout_weight="1"
-      android:layout_width="wrap_content"
+      android:layout_width="0dp"
       android:layout_height="match_parent"
       android:gravity="center"
       android:onClick="onChooseNote"
@@ -40,7 +40,7 @@
   <Button
       android:tag="note_G"
       android:layout_weight="1"
-      android:layout_width="wrap_content"
+      android:layout_width="0dp"
       android:layout_height="match_parent"
       android:gravity="center"
       android:onClick="onChooseNote"
@@ -48,7 +48,7 @@
   <Button
       android:tag="note_A"
       android:layout_weight="1"
-      android:layout_width="wrap_content"
+      android:layout_width="0dp"
       android:layout_height="match_parent"
       android:gravity="center"
       android:onClick="onChooseNote"
@@ -56,7 +56,7 @@
   <Button
       android:tag="note_B"
       android:layout_weight="1"
-      android:layout_width="wrap_content"
+      android:layout_width="0dp"
       android:layout_height="match_parent"
       android:gravity="center"
       android:onClick="onChooseNote"
