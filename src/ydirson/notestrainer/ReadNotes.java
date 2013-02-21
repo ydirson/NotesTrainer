@@ -51,7 +51,6 @@ public class ReadNotes extends Activity {
     static final String STATE_STARTED = "started";
     static final String STATE_CURRENTNOTE = "currentNote";
     static final String STATE_ELAPSEDTIME = "elapsedTime";
-    static final String STATE_GAMEMODE = "gameMode";
 
     /** Called when the activity is first created. */
     @Override
@@ -74,10 +73,10 @@ public class ReadNotes extends Activity {
         _rng = new Random();
 
         // initialize game state
+        _gameMode = (GameMode)getIntent().getSerializableExtra(EXTRA_MODE);
         if (savedInstanceState != null) {
             _started = savedInstanceState.getBoolean(STATE_STARTED);
             _elapsedTime = savedInstanceState.getLong(STATE_ELAPSEDTIME);
-            _gameMode = (GameMode)savedInstanceState.getSerializable(STATE_GAMEMODE);
             if (_started) {
                 _currentNote = savedInstanceState.getInt(STATE_CURRENTNOTE);
                 _scoreview.setNote(_currentNote);
@@ -85,7 +84,6 @@ public class ReadNotes extends Activity {
         } else {
             _started = false;
             _elapsedTime = -1;
-            _gameMode = (GameMode)getIntent().getSerializableExtra(EXTRA_MODE);
         }
     }
 
@@ -137,7 +135,6 @@ public class ReadNotes extends Activity {
         savedInstanceState.putInt(STATE_CURRENTNOTE, _currentNote);
         savedInstanceState.putLong(STATE_ELAPSEDTIME,
                                    SystemClock.elapsedRealtime() - _chrono.getBase());
-        savedInstanceState.putSerializable(STATE_GAMEMODE, _gameMode);
 
         // Save the view hierarchy state
         super.onSaveInstanceState(savedInstanceState);
